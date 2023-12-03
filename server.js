@@ -6,12 +6,12 @@ import Cors from "cors"
 // App Config
 const app = express();
 const port = process.env.PORT || 8001;
-const connection_url = "mongodb+srv://mubassimkhan:uuT7LxfZtpPZIow1@tinder-clone.3ucizef.mongodb.net/?retryWrites=true&w=majority";
+const connection_url = "mongodb+srv://mubassimkhan:uuT7LxfZtpPZIow1@tinder-clone.3ucizef.mongodb.net/tinderdb?retryWrites=true&w=majority";
 
 // Middlewares
 app.use(express.json());
 app.use(Cors());
-
+ 
 // DB config
 mongoose.connect(connection_url, {
     // useNewUrlParser: true,   -> No Longer Needed
@@ -28,26 +28,27 @@ app.get("/", (req, res) => res.status(200).send("Hello Me Here"))
 app.post('/tinder/cards', (req, res) => {
     const dbCard = req.body;
 
-    Cards.create(dbCard).then((err, data) => {
-        if (err) {
-            res.status(500).send(err)
-            console.log("Error in create method" + err)
-        } else {
-            res.status(201).send(data)
-        }
-    })
+    Cards.create(dbCard)
+        .then(data => {
+            res.status(201).send(data);
+        })
+        .catch(err => {
+            res.status(500).send(err);
+            console.log("Error in create method" + err);
+        });
 });
 
 app.get('/tinder/cards', (req, res) => {
-    Cards.find().then((err, result) => {
-        if (err) {
-            res.status(500).send(err)
-            console.log("Error in find method" + err)
-        } else {
-            res.status(200).send(result)
-        }
-    })
+    Cards.find()
+        .then(result => {
+            res.status(200).send(result);
+        })
+        .catch(err => {
+            res.status(500).send(err);
+            console.log("Error in find method" + err);
+        });
 });
+
 
 // Listener
 app.listen(port, () => console.log(`Listening on localhost port no: ${port}`))
