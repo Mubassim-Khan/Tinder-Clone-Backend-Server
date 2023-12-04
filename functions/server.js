@@ -3,6 +3,9 @@ import express from "express";
 import Cards from "./dbCards.js"
 import Cors from "cors"
 
+const serverless = require("serverless-http")
+const router = express.Router();
+
 // App Config
 const app = express();
 const port = process.env.PORT || 8001;
@@ -52,3 +55,6 @@ app.get('/tinder/cards', (req, res) => {
 
 // Listener
 app.listen(port, () => console.log(`Listening on localhost port no: ${port}`))
+
+app.use('/.netlify/functions/server', router);
+module.exports.handler = serverless(app);
