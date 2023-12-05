@@ -6,3 +6,4 @@ Procfile
 
 functions
 netlify.toml
+.env

@@ -3,13 +3,15 @@ import express from "express";
 import Cards from "./dbCards.js"
 import Cors from "cors"
 import serverless from "serverless-http"
+import dotenv from "dotenv"
 
 const router = express.Router();
+dotenv.config();
 
 // App Config
 const app = express();
 const port = process.env.PORT || 8001;
-const connection_url = "mongodb+srv://mubassimkhan:uuT7LxfZtpPZIow1@tinder-clone.3ucizef.mongodb.net/tinderdb?retryWrites=true&w=majority";
+const connection_url = `mongodb+srv://mubassimkhan:${process.env.MONGODB_PASSWORD}@tinder-clone.3ucizef.mongodb.net/tinderdb?retryWrites=true&w=majority`;
 
 // Middlewares
 app.use(express.json());
@@ -56,8 +58,8 @@ app.get('/tinder/cards', (req, res) => {
 // Listener
 app.listen(port, () => console.log(`Listening on localhost port no: ${port}`))
 
+// For Netlify Deployment of serverless app !=
 app.use('/.netlify/functions/server', router);
-// export default serverless(app).handler;
 export default app;
 export const handler = serverless(app);
 
