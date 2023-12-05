@@ -1,4 +1,8 @@
 node_modules
 pwd.txt
+Procfile
 # Local Netlify folder
 .netlify
+
+functions
+netlify.toml

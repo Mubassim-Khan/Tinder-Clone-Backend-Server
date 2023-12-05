@@ -6,3 +6,4 @@ const cardSchema = mongoose.Schema({
 })
 
 export default mongoose.model("cards", cardSchema)
+// module.exports = mongoose.model("cards", cardSchema);
